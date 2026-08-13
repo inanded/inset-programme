@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>INSET Programme 2026-2027 | CSB</title>
+<style>
+  :root{
+    --bordeaux:#7e2d40; --bordeaux-dark:#5f2030; --bordeaux-soft:#f4e9ec;
+    --green:#154734; --green-dark:#103729; --green-soft:#e8f0ed;
+    --grey:#857874; --ink:#202522; --muted:#665d5a; --line:#ded9d6;
+    --paper:#fff; --canvas:#f5f3f1; --warm:#faf8f6;
+    --shadow:0 12px 36px rgb(54 42 38 / 8%);
+    --sans:Aptos,"Segoe UI",Arial,sans-serif;
+    --display:"Aptos Display","Segoe UI",Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--canvas);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+  /* Motion primitives */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.75,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* Accessibility skip link */
+  .skip{position:absolute;left:-9999px;top:10px;z-index:60;background:#fff;color:var(--ink);padding:10px 15px;border-radius:9px;font-size:13px;box-shadow:var(--shadow)}
+  .skip:focus{left:16px}
+
+  /* Hero — full-bleed, nav integrated */
+  .hero{position:relative;overflow:hidden;color:#fff;isolation:isolate;
+    background:
+      radial-gradient(115% 85% at 84% -12%, rgba(126,45,64,.42), transparent 58%),
+      radial-gradient(90% 90% at 6% 118%, rgba(8,42,29,.85), transparent 55%),
+      linear-gradient(152deg, var(--green) 0%, var(--green-dark) 56%, #0b271c 100%)}
+  .hero::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.55;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+    background-size:180px 180px}
+
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 0}
+  .brand{display:flex;align-items:center;gap:13px}
+  .logo{width:46px;height:46px;border-radius:13px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.26);color:#fff;display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:17px;letter-spacing:.5px;backdrop-filter:blur(4px)}
+  .brand .name{font-family:var(--display);font-weight:650;font-size:16px;line-height:1.15;color:#fff}
+  .brand .sub{font-size:12px;color:rgba(255,255,255,.62)}
+  .nav-mark{font-size:11.5px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6);font-weight:700;white-space:nowrap}
+
+  .hero-copy{padding:40px 0 82px;position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:48px;align-items:center}
+  .hero-text{min-width:0}
+  .eyebrow{display:inline-flex;align-items:center;gap:12px;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.74);font-weight:700}
+  .eyebrow::before{content:"";width:32px;height:1px;background:rgba(255,255,255,.5)}
+  h1{font-family:var(--display);font-weight:660;font-size:clamp(3rem,6.4vw,5rem);line-height:.97;letter-spacing:-.04em;margin:22px 0 0;max-width:13ch;color:#fff}
+  h1 .yr{color:rgba(255,255,255,.42);font-weight:640}
+  .lede{max-width:520px;color:rgba(255,255,255,.82);font-size:17px;margin-top:22px}
+  .hero-meta{display:flex;flex-direction:column;gap:14px;margin:0;align-self:center}
+  .hcard{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:16px 20px;min-width:230px;backdrop-filter:blur(6px)}
+  .hcard b{display:block;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:5px}
+  .hcard span{display:block;font-size:14.5px;color:rgba(255,255,255,.92)}
+
+  /* Content lifts over hero base */
+  .stage{position:relative;z-index:5;margin-top:-46px}
+
+  /* Sidebar + content layout */
+  .layout{display:block;margin-top:22px}
+  .content{min-width:0}
+  .content-head{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin:26px 0 6px}
+  .ch-title{font-family:var(--display);font-weight:660;font-size:clamp(20px,2.6vw,26px);letter-spacing:-.02em}
+  .sb-head{display:none}
+
+  /* Notice */
+  .notice{display:flex;gap:15px;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow)}
+  .notice .i{flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:var(--green-soft);color:var(--green);display:grid;place-items:center;font-weight:800;font-style:italic;font-family:Georgia,serif;font-size:16px}
+  .notice h3{margin:0 0 4px;font-size:15px;font-family:var(--display);font-weight:650}
+  .notice p{margin:0;font-size:14px;color:var(--muted);max-width:760px}
+
+  /* Filters */
+  .panel{background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);margin:0;overflow:hidden}
+  .panel-toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;background:transparent;border:0;padding:18px 22px;cursor:pointer;font:inherit;text-align:left;color:var(--ink)}
+  .pt-title{font-family:var(--display);font-weight:650;font-size:20px}
+  .pt-right{display:flex;align-items:center;gap:10px}
+  .pt-badge{background:var(--bordeaux);color:#fff;font-size:12px;font-weight:700;border-radius:99px;padding:3px 9px;line-height:1.4}
+  .pt-chev{color:var(--grey);font-size:15px;transition:transform .2s;display:none}
+  .panel-body{padding:0 22px 22px}
+  .fgroup{padding:16px 0;border-top:1px solid var(--line)}
+  .fgroup:first-of-type{border-top:0;padding-top:6px}
+  .flabel{font-size:12.5px;letter-spacing:.4px;text-transform:uppercase;font-weight:700;color:var(--grey);margin-bottom:2px}
+  .fhint{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{display:inline-flex;align-items:center;min-height:38px;font-size:13px;border:1px solid var(--line);background:var(--warm);color:var(--ink);border-radius:8px;padding:6px 13px;cursor:pointer;transition:.12s;user-select:none}
+  .chip:hover{border-color:var(--grey)}
+  .chip.on{background:var(--green);border-color:var(--green);color:#fff}
+  .chip.area.on{background:var(--bordeaux);border-color:var(--bordeaux)}
+  .searchrow{display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:var(--paper);border-radius:11px;padding:0 14px;flex:1 1 260px;max-width:440px}
+  .searchrow:focus-within{border-color:var(--green);box-shadow:0 0 0 3px var(--green-soft)}
+  .searchrow input{border:0;background:transparent;padding:12px 0;font:inherit;font-size:14.5px;width:100%;outline:none;color:var(--ink)}
+  .searchrow .g{color:var(--grey);font-size:16px}
+  .factions{display:flex;align-items:center;justify-content:flex-start;gap:12px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);flex-wrap:wrap}
+  .count{font-family:var(--display);font-weight:660;font-size:16px;margin:14px 0 2px}
+  .count b{color:var(--bordeaux)}
+  .reset{font-size:13px;background:transparent;border:0;color:var(--muted);cursor:pointer;text-decoration:underline;padding:6px}
+  .reset:hover{color:var(--ink)}
+  .apply{display:none;align-items:center;justify-content:center;gap:8px;background:var(--green);color:#fff;border:0;border-radius:11px;font:inherit;font-weight:700;font-size:14.5px;padding:12px 18px;cursor:pointer;min-height:48px}
+  .apply:active{transform:translateY(1px)}
+
+  /* Date tabs */
+  .tabs-sticky{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--canvas) 90%,transparent);backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid var(--line)}
+  .tabs{display:flex;gap:8px;overflow-x:auto;padding:12px 0;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+  .tab{flex:0 0 auto;border:1px solid var(--line);background:var(--paper);border-radius:10px;padding:8px 12px;cursor:pointer;text-align:center;min-width:74px;transition:.12s}
+  .tab:hover{border-color:var(--grey)}
+  .tab.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  .tab .d{font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75}
+  .tab .n{font-size:14px;font-weight:700;margin-top:2px}
+  .tab .x{display:block;font-size:10.5px;opacity:.7;margin-top:1px}
+
+  /* Day + sessions */
+  .day{margin:52px 0}
+  .day:first-of-type{margin-top:40px}
+  .day-head{display:flex;align-items:center;gap:18px;margin-bottom:16px}
+  .datechip{flex:0 0 auto;width:64px;text-align:center;background:var(--bordeaux);color:#fff;border-radius:14px;padding:9px 0;line-height:1;box-shadow:0 8px 20px rgb(126 45 64 / 22%)}
+  .datechip .m{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;opacity:.85}
+  .datechip .n{font-family:var(--display);font-weight:660;font-size:28px;margin-top:4px;letter-spacing:-.02em}
+  .day-title{font-family:var(--display);font-weight:660;font-size:clamp(24px,3.4vw,30px);letter-spacing:-.02em;line-height:1.05}
+  .day-title .sub{color:var(--bordeaux)}
+  .day-meta{font-size:13px;color:var(--muted);margin-top:4px;letter-spacing:.2px}
+  .day-note{font-size:13.5px;color:var(--muted);background:var(--warm);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin-bottom:18px;max-width:760px}
+
+  .grid{display:flex;flex-direction:column;gap:10px}
+  .row{display:grid;grid-template-columns:1fr;gap:12px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 20px;transition:transform .3s cubic-bezier(.2,.75,.2,1),box-shadow .3s ease,border-color .3s ease}
+  .row:hover{border-color:var(--grey);box-shadow:var(--shadow)}
+  .time{display:inline-flex;align-items:center;gap:8px;color:var(--green);font-weight:800;font-size:13px;letter-spacing:.3px;white-space:nowrap}
+  .time::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px var(--green-soft)}
+  .rmain{min-width:0}
+  .row h4{margin:0 0 3px;font-size:16.5px;font-family:var(--display);font-weight:650;letter-spacing:-.015em;line-height:1.2}
+  .aud{font-size:13.5px;color:var(--muted);margin:0 0 10px}
+  .pills{display:flex;flex-wrap:wrap;gap:6px}
+  .pill{font-size:10.5px;background:var(--bordeaux-soft);color:var(--bordeaux-dark);border-radius:99px;padding:3px 9px;font-weight:600;letter-spacing:.2px}
+  .pill.area{background:var(--green-soft);color:var(--green)}
+  .rmeta{display:flex;flex-wrap:wrap;gap:20px;border-top:1px solid var(--line);padding-top:12px}
+  .rmeta>div{font-size:13px}
+  .rk{font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--grey);font-weight:700;margin-bottom:2px}
+  .rv{color:var(--ink)}
+
+  .empty{text-align:center;padding:60px 20px;color:var(--muted)}
+  .empty h3{font-family:var(--display);font-weight:650;color:var(--ink);margin:0 0 6px}
+
+  footer{border-top:1px solid var(--line);background:var(--paper);margin-top:40px}
+  .foot{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:24px 0;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+  .foot a{color:var(--green);text-decoration:none}
+  .foot a:hover{text-decoration:underline}
+
+  /* Rows become horizontal once there is room */
+  @media(min-width:640px){
+    .row{grid-template-columns:104px minmax(0,1fr) 190px;gap:26px;align-items:start}
+    .rmeta{flex-direction:column;gap:12px;border-top:0;padding-top:2px}
+  }
+
+  /* Desktop: filters become a sticky left rail */
+  @media(min-width:900px){
+    .layout{display:grid;grid-template-columns:264px minmax(0,1fr);gap:34px;align-items:start}
+    .panel{position:sticky;top:16px;max-height:calc(100vh - 32px);display:flex;flex-direction:column}
+    .panel-body{overflow-y:auto}
+    .panel-toggle{cursor:default}
+    .panel-body{display:block!important}
+  }
+
+  /* Tablet + phone: filters collapse into a height-capped panel that scrolls
+     internally, with the action bar pinned to the bottom of that scroll area. */
+  @media(max-width:899px){
+    .pt-chev{display:block}
+    .panel.collapsed .panel-body{display:none}
+    .panel.collapsed .pt-chev{transform:rotate(-90deg)}
+    .panel-body{max-height:60vh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:0}
+    .apply{display:inline-flex;flex:0 0 auto}
+    .reset{flex:0 0 auto}
+    .factions{position:sticky;bottom:0;z-index:2;flex-wrap:nowrap;justify-content:space-between;gap:12px;margin:14px -22px 0;padding:12px 22px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:var(--paper);box-shadow:0 -10px 22px rgb(54 42 38 / 12%)}
+  }
+
+  /* Phone ergonomics */
+  @media(max-width:719px){
+    .wrap{padding:0 16px}
+    .nav{padding:18px 0}
+    .nav-mark{display:none}
+    .hero-copy{display:block;padding:30px 0 58px}
+    h1{font-size:clamp(2.6rem,13vw,3.4rem);margin-top:18px;max-width:none}
+    .lede{font-size:15.5px;margin-top:18px}
+    .hero-meta{flex-direction:row;flex-wrap:wrap;gap:10px;margin-top:26px}
+    .hcard{flex:1 1 100%;min-width:0;padding:14px 16px}
+    .stage{margin-top:-38px}
+    .tabs{padding:10px 0}
+    .chip{min-height:44px;font-size:14px;padding:8px 15px}
+    .tab{min-height:52px;display:flex;flex-direction:column;justify-content:center}
+    .day{margin:40px 0}
+    .day-head{gap:13px}
+    .datechip{width:56px}
+    .datechip .n{font-size:24px}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    .row{transition:none}
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#schedule">Skip to schedule</a>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <nav class="nav">
+        <div class="brand">
+          <div class="logo">CSB</div>
+          <div>
+            <div class="name">Cambridge School of Bucharest</div>
+            <div class="sub">Staff programme</div>
+          </div>
+        </div>
+        <div class="nav-mark">17 – 25 August 2026</div>
+      </nav>
+      <div class="hero-copy">
+        <div class="hero-text">
+          <div class="eyebrow">Staff Training · August 2026</div>
+          <h1>INSET Programme <span class="yr">2026&ndash;2027</span></h1>
+          <p class="lede">Find the sessions that apply to you. Start with a school area, then refine by group, topic, date or keyword.</p>
+        </div>
+        <div class="hero-meta">
+          <div class="hcard"><b>17&ndash;21 August</b><span>On site 08:30</span><span>Sessions begin 09:00</span></div>
+          <div class="hcard"><b>24&ndash;25 August</b><span>On site 08:00</span><span>See each day for timings</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="stage">
+      <div class="notice reveal">
+        <div class="i">i</div>
+        <div>
+          <h3>Before you begin</h3>
+          <p>Follow the sessions for your audience. Use unassigned time for planning and preparation. For overlaps, follow your line manager or programme lead. Medical checks take place 17–19 August.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <section class="panel reveal" id="filters">
+        <button class="panel-toggle" id="panelToggle" aria-expanded="true" aria-controls="panelBody">
+          <span class="pt-title">Filter schedule</span>
+          <span class="pt-right">
+            <span class="pt-badge" id="filterBadge" hidden></span>
+            <span class="pt-chev" aria-hidden="true">▾</span>
+          </span>
+        </button>
+        <div class="panel-body" id="panelBody">
+          <div class="fgroup">
+            <div class="flabel">School area</div>
+            <p class="fhint">Includes linked year groups and whole-school sessions.</p>
+            <div class="chips" id="areaChips"></div>
+          </div>
+
+          <div class="fgroup">
+            <div class="flabel">Staff group</div>
+            <div class="chips" id="groupChips"></div>
+          </div>
+
+          <div class="fgroup">
+            <div class="flabel">Topic</div>
+            <div class="chips" id="topicChips"></div>
+          </div>
+
+          <div class="factions">
+            <button class="reset" id="reset">Clear all filters</button>
+            <button class="apply" id="applyBtn" type="button">Show all sessions</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="content">
+        <div class="content-head reveal">
+          <h2 class="ch-title">Search sessions</h2>
+          <div class="searchrow">
+            <span class="g">⌕</span>
+            <input id="search" type="text" placeholder="Search session, lead, room…" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="tabs-sticky"><div class="tabs" id="tabs"></div></div>
+
+        <div class="count" id="count"></div>
+        <div id="schedule"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>INSET Programme 2026-2027 · Cambridge School of Bucharest</div>
+    <a href="#top" onclick="scrollTo(0,0);return false">Back to top ↑</a>
+  </div>
+</footer>
+
+<script>
+const AREAS=["Whole School","Primary","Secondary","IBDP"];
+const GROUPS=["EYFS","KS1","KS2","KS3","KS4","KS5","Sixth Form","IGCSE","Teaching Assistants","Teachers","Leaders","New Staff","Safeguarding Team","Support Staff","Optional"];
+const TOPICS=["First Aid","Safeguarding","SEND","Teaching & Learning","EdTech & AI","Planning & Preparation","Open House","School Systems","Wellbeing","Community & Logistics","Induction"];
+const WS=["Primary","Secondary","IBDP","Whole School"];
+
+const DAYS=[
+ {id:"d1",m:"AUG",n:"17",name:"Monday",date:"17 August",note:"Fixed lunch is shown. Follow your assigned first-aid course. The First Aid Advanced list will be circulated. Intensive and Advanced rooms are blank pending confirmation.",tab:{d:"MON",n:"17 Aug"},
+  s:[
+   {t:"09:00-09:30",ti:"Director’s Welcome and Who’s Who",a:"All staff",g:[...WS,"Induction"],l:"Rita Hayek Maalouf and Heath Renfroe",r:"Assembly Hall"},
+   {t:"09:30-11:00",ti:"First Aid Basic",a:"Staff assigned to First Aid Basic",g:[...WS,"First Aid"],l:"Academia de Prim Ajutor",r:"Assembly Hall"},
+   {t:"09:30-12:30",ti:"First Aid Intensive",a:"Staff assigned to First Aid Intensive",g:[...WS,"First Aid"],l:"Academia de Prim Ajutor",r:"To be confirmed"},
+   {t:"09:30-14:30",ti:"First Aid Advanced",a:"Staff assigned to First Aid Advanced",g:[...WS,"First Aid"],l:"Academia de Prim Ajutor",r:"To be confirmed"},
+   {t:"11:00-11:30",ti:"Campus Tour",a:"New staff not attending First Aid Intensive or Advanced",g:[...WS,"New Staff","Community & Logistics"],l:"To be confirmed",r:"Meet in Assembly Hall"},
+   {t:"11:30-12:30",ti:"Health and Safety",a:"All staff except First Aid Intensive and Advanced participants",g:[...WS,"Induction"],l:"Safelandia",r:"Assembly Hall"},
+   {t:"12:30-13:30",ti:"Lunch",a:"All staff except First Aid Advanced participants",g:[...WS],l:"Not listed",r:"To be confirmed"},
+   {t:"13:30-14:30",ti:"Medical Insurance Presentation",a:"All staff except First Aid Advanced participants",g:[...WS,"Community & Logistics"],l:"Medicover",r:"Assembly Hall"},
+   {t:"14:30-15:00",ti:"Break and transition",a:"All staff",g:[...WS],l:"Not listed",r:"To be confirmed"},
+   {t:"15:00-16:00",ti:"Primary Welcome",a:"All Primary staff",g:["Primary","Induction"],l:"Head of Primary and Katie Shanahan, Assistant School Director (Primary)",r:"Assembly Hall"},
+   {t:"15:00-16:00",ti:"Secondary Departments Welcome",a:"All Secondary staff",g:["Secondary","Induction"],l:"HoDs and Assistant School Director (Secondary)",r:"Department classrooms"}
+  ]},
+ {id:"d2",m:"AUG",n:"18",name:"Tuesday",date:"18 August",note:"Take lunch and reasonable breaks around assigned sessions. Staff not attending a listed session should use the time for planning and preparation. Bank representatives are available from 13:30; staff attending the KS3–5 session can visit afterwards.",tab:{d:"TUE",n:"18 Aug"},
+  s:[
+   {t:"09:00-10:00",ti:"Child Protection and Safeguarding Training",a:"All staff",g:[...WS,"Safeguarding"],l:"Designated Safeguarding Lead and Safeguarding Team",r:"Assembly Hall"},
+   {t:"10:00-11:00",ti:"Primary Ethos",a:"EYFS and Primary classroom teachers, subject teachers and TAs",g:["Primary","EYFS","Teaching Assistants","Teachers","Induction"],l:"Heather Tereszczenko",r:"Assembly Hall"},
+   {t:"10:00-11:00",ti:"Secondary Department Meetings",a:"Secondary staff",g:["Secondary"],l:"Heads of Department",r:"Department classrooms"},
+   {t:"11:00-11:30",ti:"Planning, preparation and transition time",a:"Primary staff",g:["Primary","Planning & Preparation"],l:"Not listed",r:"Work area / classroom"},
+   {t:"11:30-13:00",ti:"Primary Teaching and Learning",a:"All Primary staff: classroom teachers, TAs and specialists",g:["Primary","Teaching Assistants","Teachers","Teaching & Learning"],l:"Katie Shanahan",r:"Assembly Hall"},
+   {t:"11:00-13:00",ti:"Planning and preparation",a:"Secondary staff and other staff not assigned to a session",g:["Secondary","Planning & Preparation"],l:"Not listed",r:"Work area / classroom"},
+   {t:"13:00-14:00",ti:"Secondary Teaching and Learning",a:"KS3–KS5 teachers",g:["Secondary","KS3","KS4","KS5","Teachers","Teaching & Learning"],l:"Matthew Wemyss",r:"Assembly Hall"},
+   {t:"13:00-14:00",ti:"Planning and preparation",a:"Primary staff and other staff not assigned above",g:["Primary","Planning & Preparation"],l:"Not listed",r:"Work area / classroom"},
+   {t:"13:30 onwards",ti:"Support to Open a Romanian Bank Account",a:"Available to all staff; optional",g:[...WS,"Optional","Community & Logistics"],l:"Bank representatives",r:"Top Floor, Oak Building"},
+   {t:"14:00-16:00",ti:"Planning and preparation",a:"All staff not meeting bank representatives",g:[...WS,"Planning & Preparation"],l:"Not listed",r:"Work area / classroom"}
+  ]},
+ {id:"d3",m:"AUG",n:"19",name:"Wednesday",date:"19 August",note:"Take lunch and reasonable breaks around assigned sessions. From 13:00–16:00, teachers and TAs not assigned to another session may undertake planning and preparation or complete their assigned National College courses in the IT labs. Staff who teach across Key Stages need attend only one SEND session unless directed otherwise.",tab:{d:"WED",n:"19 Aug"},
+  s:[
+   {t:"09:00-12:00",ti:"A Shared Language for Learning and Teaching",a:"All teachers",g:[...WS,"Teachers","Teaching & Learning"],l:"Jayne Bennion",r:"Assembly Hall"},
+   {t:"12:00-13:00",ti:"Planning and preparation",a:"All staff",g:[...WS,"Planning & Preparation"],l:"Not listed",r:"Work area / classroom"},
+   {t:"13:00-16:00",ti:"From Observing to Coaching",a:"SLT, Heads of Year, Heads of Department and Lead Teachers",g:["Teachers","Leaders","Teaching & Learning"],l:"Jayne Bennion",r:"Assembly Hall"},
+   {t:"13:00-14:00",ti:"SEND: Primary",a:"Primary teachers",g:["Primary","Teachers","SEND"],l:"Elena Lada",r:"STEAM Lab"},
+   {t:"13:00-14:00",ti:"SEND: Secondary",a:"KS3 teachers",g:["Secondary","KS3","Teachers","SEND"],l:"Matthew Tucker",r:"To be confirmed"},
+   {t:"14:15-15:15",ti:"SEND: EYFS",a:"EYFS teachers",g:["Primary","EYFS","Teachers","SEND"],l:"Elena Lada",r:"STEAM Lab"},
+   {t:"14:15-15:15",ti:"SEND: Secondary",a:"KS4 and KS5 teachers",g:["Secondary","KS4","KS5","Teachers","SEND"],l:"Matthew Tucker",r:"To be confirmed"},
+   {t:"15:30-16:00",ti:"Meet the Wellbeing Team",a:"All staff; invited",g:[...WS,"Optional","Wellbeing"],l:"Wellbeing Team",r:"STEAM Lab"},
+   {t:"13:00-16:00",ti:"Planning and preparation or assigned National College courses",a:"Teachers and TAs not assigned to another session",g:[...WS,"Teaching Assistants","Teachers"],l:"Not listed",r:"Work area / classroom / IT labs"}
+  ]},
+ {id:"d4",m:"AUG",n:"20",name:"Thursday",date:"20 August",sub:"Main Programme",note:"All staff, including IBDP teachers, attend the Performance Development Process at 09:00. A fixed lunch is shown. From 10:00, IBDP teachers follow the separate IBDP pathway on the next page.",tab:{d:"THU",n:"20 Aug",x:"Main"},
+  s:[
+   {t:"09:00-10:00",ti:"Performance Development Process",a:"All staff",g:[...WS,"School Systems"],l:"Matthew Wemyss and Katie Shanahan",r:"Assembly Hall"},
+   {t:"10:00-11:00",ti:"Read Write Inc. Phonics Training",a:"Reception–Year 2 classroom teachers and TAs",g:["Primary","EYFS","KS1","Teaching Assistants","Teachers","Teaching & Learning"],l:"Alexandra Dache",r:"Assembly Hall"},
+   {t:"10:00-11:00",ti:"Planning and Classroom Preparation",a:"Years 3–6 staff",g:["Primary","KS2","Planning & Preparation"],l:"Heads of Year and Lead Teachers",r:"Classrooms"},
+   {t:"11:00-12:00",ti:"Primary Teaching and Learning: Challenge and Clubs",a:"Primary classroom teachers and specialists",g:["Primary","Teachers","Teaching & Learning"],l:"Katie Shanahan",r:"Assembly Hall"},
+   {t:"11:00-12:00",ti:"Welcome and the Year Ahead",a:"All TAs",g:["Primary","Secondary","Whole School","Teaching Assistants","Induction"],l:"Heather Tereszczenko, Alex M. [surname to confirm] and Robertina [surname to confirm]",r:"STEAM Lab"},
+   {t:"12:00-13:00",ti:"Lunch",a:"Main-programme staff",g:[...WS],l:"Not listed",r:"To be confirmed"},
+   {t:"13:00-16:00",ti:"Planning and Classroom Preparation",a:"EYFS and Primary staff",g:["Primary","EYFS","Planning & Preparation"],l:"Heads of Year and Lead Teachers",r:"Classrooms"},
+   {t:"13:00-14:00",ti:"EdTech and AI Workshop",a:"KS3 teachers",g:["Secondary","KS3","Teachers","EdTech & AI"],l:"Matthew Wemyss",r:"IT Lab 1"},
+   {t:"14:15-15:15",ti:"EdTech and AI Workshop",a:"KS4 and KS5 teachers",g:["Secondary","KS4","KS5","Teachers","EdTech & AI"],l:"Matthew Wemyss",r:"IT Lab 1"},
+   {t:"15:30-16:00",ti:"Accommodation",a:"New teachers with school-provided accommodation",g:[...WS,"Teachers","New Staff"],l:"Rita Hayek Maalouf and Heath Renfroe",r:"Assembly Hall"},
+   {t:"13:00-16:00",ti:"Planning and preparation",a:"Secondary staff not assigned to a session",g:["Secondary","Planning & Preparation"],l:"Not listed",r:"Work area / classroom"}
+  ]},
+ {id:"d5",m:"AUG",n:"20",name:"Thursday",date:"20 August",sub:"IBDP Pathway",note:"IBDP teachers attend the all-staff Performance Development Process at 09:00, then follow this pathway from 10:00. A morning break and fixed lunch are shown.",tab:{d:"THU",n:"20 Aug",x:"IBDP"},
+  s:[
+   {t:"10:00-10:30",ti:"IBDP at Cambridge School of Bucharest",a:"All IBDP teachers",g:["Secondary","IBDP","KS5","Sixth Form","Teachers"],l:"IB Coordinator",r:"Meeting Room"},
+   {t:"10:30-10:45",ti:"Break",a:"All IBDP teachers",g:["Secondary","IBDP","KS5","Sixth Form","Teachers"],l:"Not listed",r:"To be confirmed"},
+   {t:"10:45-11:15",ti:"Internal Assessment Calendar and Confirmation of Dates",a:"All IBDP teachers",g:["Secondary","IBDP","KS5","Sixth Form","Teachers"],l:"IB Coordinator",r:"Meeting Room"},
+   {t:"11:15-11:45",ti:"IB Policies",a:"All IBDP teachers",g:["Secondary","IBDP","KS5","Sixth Form","Teachers"],l:"IB Coordinator and IB Librarian",r:"Meeting Room"},
+   {t:"11:45-13:00",ti:"Interdisciplinary Teaching: Connecting Subjects for Holistic Learning",a:"All IBDP teachers",g:["Secondary","IBDP","KS5","Sixth Form","Teachers"],l:"IB Coordinator",r:"Meeting Room"},
+   {t:"13:00-13:30",ti:"Technology in the Classroom: Enhancing Learning with Digital Tools",a:"All IBDP teachers",g:["Secondary","IBDP","KS5","Sixth Form","Teachers","EdTech & AI"],l:"IB Librarian",r:"Meeting Room"},
+   {t:"13:30-14:00",ti:"Lunch",a:"All IBDP teachers",g:["Secondary","IBDP","KS5","Sixth Form","Teachers"],l:"Not listed",r:"To be confirmed"},
+   {t:"14:00-15:00",ti:"Organising the IB Core",a:"IBDP Core teachers",g:["Secondary","IBDP","KS5","Sixth Form","Teachers"],l:"IB Coordinator",r:"IBDP Coordinator’s Office"},
+   {t:"14:00-16:00",ti:"Planning and preparation",a:"IBDP teachers not attending the Core session",g:["Secondary","IBDP","KS5","Sixth Form","Teachers","Planning & Preparation"],l:"Not listed",r:"Work area / classroom"},
+   {t:"15:00-16:00",ti:"Planning and preparation",a:"IBDP Core teachers",g:["Secondary","IBDP","KS5","Sixth Form","Teachers","Planning & Preparation"],l:"Not listed",r:"Work area / classroom"}
+  ]},
+ {id:"d6",m:"AUG",n:"21",name:"Friday",date:"21 August",note:"Take lunch and reasonable breaks around assigned sessions. Staff not attending a listed session should use the time for planning and preparation. The Staff Mixer begins after the working day and requires advance sign-up.",tab:{d:"FRI",n:"21 Aug"},
+  s:[
+   {t:"09:00-09:45",ti:"Staff Handbook and School Development Plan",a:"All teachers",g:[...WS,"Teachers","School Systems"],l:"Rita Hayek Maalouf and Heath Renfroe",r:"Assembly Hall"},
+   {t:"09:45-10:00",ti:"Oak and Elm Overview",a:"All teachers",g:[...WS,"Teachers","Induction"],l:"Julia Suroz and Heath Renfroe",r:"Assembly Hall"},
+   {t:"10:00-11:00",ti:"CPOMS Safeguarding System Training",a:"Safeguarding Team",g:[...WS,"Safeguarding Team","Safeguarding"],l:"Heather Tereszczenko and Julia Suroz",r:"Meeting Room"},
+   {t:"10:00-11:00",ti:"Planning and preparation",a:"Staff not attending CPOMS training",g:[...WS,"Planning & Preparation"],l:"Not listed",r:"Work area / classroom"},
+   {t:"11:00-12:00",ti:"CPOMS Safeguarding System Training",a:"Nurses, counsellors and supervisors",g:[...WS,"Support Staff","Safeguarding"],l:"Heather Tereszczenko and Julia Suroz",r:"Meeting Room"},
+   {t:"11:00-12:00",ti:"EdTech and AI Workshop",a:"EYFS and KS1 teachers, TAs and specialists",g:["Primary","EYFS","KS1","Teaching Assistants","Teachers","EdTech & AI"],l:"Matthew Wemyss",r:"IT Lab 1"},
+   {t:"12:00-13:00",ti:"EdTech and AI Workshop",a:"KS2 teachers, TAs and specialists",g:["Primary","KS2","Teaching Assistants","Teachers","EdTech & AI"],l:"Matthew Wemyss",r:"IT Lab 1"},
+   {t:"12:00-14:00",ti:"Planning and preparation",a:"Staff not assigned to a session",g:[...WS,"Planning & Preparation"],l:"Not listed",r:"Work area / classroom"},
+   {t:"14:00-14:30",ti:"School House System",a:"All teachers",g:[...WS,"Teachers","School Systems"],l:"Heath Renfroe",r:"Assembly Hall"},
+   {t:"14:30-15:30",ti:"Engage Training",a:"New teachers; optional for others",g:[...WS,"Teachers","New Staff"],l:"Matthew Wemyss",r:"IT Lab 1"},
+   {t:"15:30-16:00",ti:"Planning and preparation",a:"All staff",g:[...WS,"Planning & Preparation"],l:"Not listed",r:"Work area / classroom"},
+   {t:"17:30",ti:"Staff Mixer",a:"All teachers who have completed the sign-up form",g:[...WS,"Teachers","Community & Logistics"],l:"Not listed",r:"To be confirmed"}
+  ]},
+ {id:"d7",m:"AUG",n:"24",name:"Monday",date:"24 August",note:"All staff should be on site from 08:00. Take lunch and reasonable breaks around assigned sessions. Primary Open House timings vary by year group; check the separate year-group timetable.",tab:{d:"MON",n:"24 Aug"},
+  s:[
+   {t:"08:00-09:00",ti:"Planning and preparation",a:"All staff",g:[...WS,"Planning & Preparation"],l:"Not listed",r:"Work area / classroom"},
+   {t:"09:00-15:00",ti:"Primary Open Houses",a:"Primary classroom teachers and TAs; check year-group times",g:["Primary","Teaching Assistants","Teachers","Open House"],l:"Not listed",r:"Elm and Cloud buildings"},
+   {t:"09:00-10:30",ti:"Planning and preparation",a:"Secondary staff",g:["Secondary","Planning & Preparation"],l:"Not listed",r:"Work area / classroom"},
+   {t:"10:30-11:30",ti:"Clubs and Form Tutoring for Years 7–13",a:"Tutors for Years 7–13",g:["Secondary","Sixth Form","Leaders","KS3","KS4","KS5"],l:"Jonathon Wragg",r:"Assembly Hall"},
+   {t:"11:30-12:00",ti:"Planning and preparation",a:"Secondary staff",g:["Secondary","Planning & Preparation"],l:"Not listed",r:"Work area / classroom"},
+   {t:"12:00-12:45",ti:"Behaviour Policy for KS3–KS5",a:"Secondary teachers",g:["Secondary","KS3","KS4","KS5","Teachers"],l:"Jonathon Wragg and Heath Renfroe",r:"Assembly Hall"},
+   {t:"12:45-14:45",ti:"Planning and preparation",a:"Secondary staff",g:["Secondary","Planning & Preparation"],l:"Not listed",r:"Work area / classroom"},
+   {t:"14:45-16:00",ti:"Planning and preparation",a:"All teaching staff",g:[...WS,"Teachers","Planning & Preparation"],l:"Not listed",r:"Work area / classroom"}
+  ]},
+ {id:"d8",m:"AUG",n:"25",name:"Tuesday",date:"25 August",note:"All staff should be on site from 08:00. Take lunch and reasonable breaks around assigned sessions. Primary Open House timings vary by year group; check the separate year-group timetable.",tab:{d:"TUE",n:"25 Aug"},
+  s:[
+   {t:"08:00-09:00",ti:"Sixth Form University Applications: Process and Expectations",a:"Sixth Form teachers",g:["Secondary","KS5","Sixth Form","Teachers"],l:"Jonathon Wragg and Daniel Molnar",r:"Assembly Hall"},
+   {t:"08:00-09:00",ti:"Planning and preparation",a:"Staff not attending the Sixth Form session",g:["Secondary","Planning & Preparation"],l:"Not listed",r:"Work area / classroom"},
+   {t:"09:00-15:00",ti:"Primary Open Houses",a:"Primary classroom teachers and TAs; check year-group times",g:["Primary","Teaching Assistants","Teachers","Open House"],l:"Not listed",r:"Elm and Cloud buildings"},
+   {t:"09:00-10:00",ti:"Kognity Training",a:"New IGCSE teachers; optional for others",g:["Secondary","KS4","IGCSE","Teachers","Optional","EdTech & AI"],l:"External trainer, online",r:"IT Lab 02"},
+   {t:"09:00-10:00",ti:"Planning and preparation",a:"Secondary staff not assigned to a session",g:["Secondary","Planning & Preparation"],l:"Not listed",r:"Work area / classroom"},
+   {t:"10:00-16:00",ti:"Planning and preparation",a:"Secondary staff",g:["Secondary","Planning & Preparation"],l:"Not listed",r:"Work area / classroom"},
+   {t:"15:00-16:00",ti:"Planning and preparation",a:"Primary staff",g:["Primary","Planning & Preparation"],l:"Not listed",r:"Work area / classroom"}
+  ]}
+];
+
+const state={area:null,groups:new Set(),topics:new Set(),date:"all",q:""};
+const areaSet=new Set(AREAS),groupSet=new Set(GROUPS),topicSet=new Set(TOPICS);
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+// Build filter chips
+function chip(label,cls){const b=document.createElement("button");b.className="chip "+cls;b.textContent=label;b.dataset.v=label;return b;}
+const areaWrap=document.getElementById("areaChips"),groupWrap=document.getElementById("groupChips"),topicWrap=document.getElementById("topicChips");
+AREAS.forEach(a=>{const c=chip(a,"area");c.onclick=()=>{state.area=state.area===a?null:a;render();};areaWrap.appendChild(c);});
+GROUPS.forEach(a=>{const c=chip(a,"group");c.onclick=()=>{state.groups.has(a)?state.groups.delete(a):state.groups.add(a);render();};groupWrap.appendChild(c);});
+TOPICS.forEach(a=>{const c=chip(a,"topic");c.onclick=()=>{state.topics.has(a)?state.topics.delete(a):state.topics.add(a);render();};topicWrap.appendChild(c);});
+
+// Build date tabs
+const tabsWrap=document.getElementById("tabs");
+function tab(id,d,n,x){const b=document.createElement("button");b.className="tab";b.dataset.id=id;
+  b.innerHTML=`<div class="d">${d}</div><div class="n">${n}</div>${x?`<span class="x">${x}</span>`:""}`;
+  b.onclick=()=>{state.date=id;render();};return b;}
+tabsWrap.appendChild(tab("all","","All dates",""));
+DAYS.forEach(day=>tabsWrap.appendChild(tab(day.id,day.tab.d,day.tab.n,day.tab.x)));
+
+function matches(s,day){
+  if(state.area && !s.g.includes(state.area)) return false;
+  if(state.groups.size && ![...state.groups].some(g=>s.g.includes(g))) return false;
+  if(state.topics.size && ![...state.topics].some(t=>s.g.includes(t))) return false;
+  if(state.date!=="all" && day.id!==state.date) return false;
+  if(state.q){
+    const hay=(s.ti+" "+s.a+" "+s.l+" "+s.r+" "+s.g.join(" ")).toLowerCase();
+    if(!hay.includes(state.q)) return false;
+  }
+  return true;
+}
+
+function pillHTML(g){
+  if(areaSet.has(g)) return `<span class="pill area">${esc(g)}</span>`;
+  return `<span class="pill">${esc(g)}</span>`;
+}
+
+function render(){
+  // chip states
+  document.querySelectorAll("#areaChips .chip").forEach(c=>c.classList.toggle("on",c.dataset.v===state.area));
+  document.querySelectorAll("#groupChips .chip").forEach(c=>c.classList.toggle("on",state.groups.has(c.dataset.v)));
+  document.querySelectorAll("#topicChips .chip").forEach(c=>c.classList.toggle("on",state.topics.has(c.dataset.v)));
+  document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("on",t.dataset.id===state.date));
+
+  const sched=document.getElementById("schedule");sched.innerHTML="";
+  let total=0;
+  DAYS.forEach(day=>{
+    const shown=day.s.filter(s=>matches(s,day));
+    total+=shown.length;
+    if(!shown.length) return;
+    const sec=document.createElement("section");sec.className="day";
+    sec.innerHTML=`
+      <div class="day-head">
+        <div class="datechip"><div class="m">${day.m}</div><div class="n">${day.n}</div></div>
+        <div>
+          <div class="day-title">${day.name}${day.sub?` <span class="sub">· ${esc(day.sub)}</span>`:""}</div>
+          <div class="day-meta">${esc(day.date)} · ${shown.length} session${shown.length>1?"s":""}</div>
+        </div>
+      </div>
+      <div class="day-note">${esc(day.note)}</div>
+      <div class="grid">${shown.map((s,i)=>`
+        <article class="row reveal" style="transition-delay:${Math.min(i,6)*40}ms">
+          <div class="time">${esc(s.t)}</div>
+          <div class="rmain">
+            <h4>${esc(s.ti)}</h4>
+            <p class="aud">${esc(s.a)}</p>
+            <div class="pills">${s.g.map(pillHTML).join("")}</div>
+          </div>
+          <div class="rmeta">
+            <div><div class="rk">Lead</div><div class="rv">${esc(s.l)}</div></div>
+            <div><div class="rk">Room</div><div class="rv">${esc(s.r)}</div></div>
+          </div>
+        </article>`).join("")}</div>`;
+    sched.appendChild(sec);
+  });
+  if(total===0){
+    sched.innerHTML=`<div class="empty"><h3>No sessions match your filters</h3><p>Try removing a filter or clearing the search.</p></div>`;
+  }
+  const c=document.getElementById("count");
+  const active=(state.area?1:0)+state.groups.size+state.topics.size+(state.date!=="all"?1:0)+(state.q?1:0);
+  c.innerHTML=`<b>${total}</b> session${total===1?"":"s"}${active?` · ${active} filter${active>1?"s":""} active`:""}`;
+  const badge=document.getElementById("filterBadge");
+  badge.hidden=active===0;
+  badge.textContent=`${active} active`;
+  const applyBtn=document.getElementById("applyBtn");
+  applyBtn.textContent=active?`Show ${total} session${total===1?"":"s"}`:"Show all sessions";
+  observeReveals();
+}
+
+// Scroll-reveal (fade + rise), reduced-motion safe
+const revealIO=window.IntersectionObserver?new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); revealIO.unobserve(e.target); } });
+},{rootMargin:"0px 0px -8% 0px",threshold:0.05}):null;
+function observeReveals(){
+  if(!revealIO){document.querySelectorAll(".reveal").forEach(el=>el.classList.add("in"));return;}
+  document.querySelectorAll(".reveal:not(.in)").forEach(el=>revealIO.observe(el));
+}
+
+document.getElementById("search").addEventListener("input",e=>{state.q=e.target.value.trim().toLowerCase();render();});
+document.getElementById("reset").addEventListener("click",()=>{
+  state.area=null;state.groups.clear();state.topics.clear();state.date="all";state.q="";
+  document.getElementById("search").value="";render();
+});
+
+// Collapsible filter panel — collapsed on mobile, always open on desktop
+const panel=document.getElementById("filters");
+const panelToggle=document.getElementById("panelToggle");
+const mq=window.matchMedia("(max-width:899px)");
+function syncPanel(){
+  const mobile=mq.matches;
+  panel.classList.toggle("collapsed",mobile);
+  panelToggle.setAttribute("aria-expanded",mobile?"false":"true");
+}
+syncPanel();
+mq.addEventListener("change",syncPanel);
+window.addEventListener("resize",syncPanel);
+requestAnimationFrame(syncPanel);
+panelToggle.addEventListener("click",()=>{
+  if(!mq.matches) return; // static heading on desktop
+  const collapsed=panel.classList.toggle("collapsed");
+  panelToggle.setAttribute("aria-expanded",collapsed?"false":"true");
+});
+// Apply: collapse the panel and jump to the results (mobile)
+document.getElementById("applyBtn").addEventListener("click",()=>{
+  panel.classList.add("collapsed");
+  panelToggle.setAttribute("aria-expanded","false");
+  const content=document.querySelector(".content");
+  const smooth=!window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+  if(content) content.scrollIntoView({behavior:smooth?"smooth":"auto",block:"start"});
+});
+
+render();
+</script>
+</body>
+</html>
