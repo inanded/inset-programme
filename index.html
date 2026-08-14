@@ -260,16 +260,6 @@
             <div class="chips" id="areaChips"></div>
           </div>
 
-          <div class="fgroup">
-            <div class="flabel">Staff group</div>
-            <div class="chips" id="groupChips"></div>
-          </div>
-
-          <div class="fgroup">
-            <div class="flabel">Topic</div>
-            <div class="chips" id="topicChips"></div>
-          </div>
-
           <div class="factions">
             <button class="reset" id="reset">Clear all filters</button>
             <button class="apply" id="applyBtn" type="button">Show all sessions</button>
@@ -418,10 +408,8 @@ const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&qu
 
 // Build filter chips
 function chip(label,cls){const b=document.createElement("button");b.type="button";b.className="chip "+cls;b.textContent=label;b.dataset.v=label;b.setAttribute("aria-pressed","false");return b;}
-const areaWrap=document.getElementById("areaChips"),groupWrap=document.getElementById("groupChips"),topicWrap=document.getElementById("topicChips");
+const areaWrap=document.getElementById("areaChips");
 AREAS.forEach(a=>{const c=chip(a,"area");c.onclick=()=>{state.area=state.area===a?null:a;render();};areaWrap.appendChild(c);});
-GROUPS.forEach(a=>{const c=chip(a,"group");c.onclick=()=>{state.groups.has(a)?state.groups.delete(a):state.groups.add(a);render();};groupWrap.appendChild(c);});
-TOPICS.forEach(a=>{const c=chip(a,"topic");c.onclick=()=>{state.topics.has(a)?state.topics.delete(a):state.topics.add(a);render();};topicWrap.appendChild(c);});
 
 // Build date tabs
 const tabsWrap=document.getElementById("tabs");
@@ -454,8 +442,6 @@ function render(){
   // chip states
   const setState=(el,on)=>{el.classList.toggle("on",on);el.setAttribute("aria-pressed",on?"true":"false");};
   document.querySelectorAll("#areaChips .chip").forEach(c=>setState(c,c.dataset.v===state.area));
-  document.querySelectorAll("#groupChips .chip").forEach(c=>setState(c,state.groups.has(c.dataset.v)));
-  document.querySelectorAll("#topicChips .chip").forEach(c=>setState(c,state.topics.has(c.dataset.v)));
   document.querySelectorAll(".tab").forEach(t=>setState(t,t.dataset.id===state.date));
 
   const sched=document.getElementById("schedule");sched.innerHTML="";
